@@ -8,27 +8,46 @@ namespace ToH_AfterNightOut
         static void Main(string[] args)
         {
             int n = 3;  //Number of Disks
-            int k = 3, a = 1, b = 2, c = 3; //testing for the best case values, for optimum solution, which 
+            int k = 3, a = 1, b = 2, c = 3; //testing for the best case values, for optimum solution
 
             Console.WriteLine($"\n{"----------------------------"} Tower of Hanoi {"----------------------------"}\n\n");
+            //computationllyExpensiveSolution(n, k, a, b, c); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme doc)
+        }
 
-            var stats = new TowerOfHanoiAlgo().playToHGame(n, k, a, b, c);
-            var stepsCount = countStepsFromStats(stats);
+        /// <summary>
+        /// Not feasible. This problem belongs to set of those problems, which are only feasible with infinite Time & Resource. 
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        private static void computationllyExpensiveSolution(int n, int k, int a, int b, int c)
+        {
+            long totalStepsCount = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                var stats = new TowerOfHanoiAlgo().playToHGame(i, k, a, b, c);
+                var stepsCount = countStepsFromStats(stats);
+                totalStepsCount += stepsCount;
 
-            Console.WriteLine($"Number of steps count for n=3 E({n},{k},{a},{b},{c}):\t{stepsCount}\n");
+                Console.WriteLine($"Number of steps count for n=3 E({i},{k},{a},{b},{c}):\t{stepsCount}\n");
 
-            Console.WriteLine("The stats of each the movement & the sum of steps count of each of them are:-");
-            printToHStats(n, stats);    //For Printing the stats data
+                Console.WriteLine("The stats of each the movement & the sum of steps count of each of them are:-");
+                printToHStats(i, stats);    //For Printing the stats data 
+            }
+            Console.WriteLine($"Total number of steps = {totalStepsCount}");
+            Console.WriteLine($"Last 9 digits of total Number of steps count for ∑1≤n≤10000 E(n,10n,3n,6n,9n):\t{(totalStepsCount % Math.Pow(10, 9))}");
         }
 
         private static long countStepsFromStats(Dictionary<Tuple<int, int>, int> stats)
         {
-            long totalStepsCount = 0;
+            long stepsCount = 0;
             foreach (var stepsSum in stats.Values)
             {
-                totalStepsCount += stepsSum;
+                stepsCount += stepsSum;
             }
-            return totalStepsCount;
+            return stepsCount;
         }
 
         public static void printToHStats(int n, Dictionary<Tuple<int, int>, int> StepStats)
