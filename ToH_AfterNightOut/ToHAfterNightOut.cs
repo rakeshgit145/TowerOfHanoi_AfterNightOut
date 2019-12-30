@@ -15,7 +15,7 @@ namespace ToH_AfterNightOut
             var stats = new TowerOfHanoiAlgo().playToHGame(n, k, a, b, c);
             var stepsCount = countStepsFromStats(stats);
 
-            Console.WriteLine($"Number of steps count for n=3 E(n,3,1,2,3):\t{stepsCount}\n");
+            Console.WriteLine($"Number of steps count for n=3 E({n},{k},{a},{b},{c}):\t{stepsCount}\n");
 
             Console.WriteLine("The stats of each the movement & the sum of steps count of each of them are:-");
             printToHStats(n, stats);    //For Printing the stats data
