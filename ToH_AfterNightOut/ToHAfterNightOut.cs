@@ -7,12 +7,51 @@ namespace ToH_AfterNightOut
     {
         static void Main(string[] args)
         {
-            int n = 3;  //Number of Disks
-            int k = 3, a = 1, b = 2, c = 3; //testing for the best case values, for optimum solution
+            int n = 10000;  //Number of Disks
+            int k = 10, a = 3, b = 6, c = 9; //testing for the best case values, for optimum solution
 
             Console.WriteLine($"\n{"----------------------------"} Tower of Hanoi {"----------------------------"}\n\n");
-            //computationllyExpensiveSolution(n, k, a, b, c); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme doc)
+
+            //-----------Mathematical Approach----------//
+            Console.WriteLine($"Number of steps count for ∑1≤n≤10000 E(n,10n,3n,6n,9n):\t{mathematicallySolve(n, k, a, b, c)}");
+
+
+            //computationllyExpensiveSolution(n, k*n, a*n, b*n, c*n); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme file)
+            Console.ReadKey();
         }
+
+        /// <summary>
+        /// Working mathemetical approach for computing ToH for each n for O(1).
+        /// So over all the Time Complexity of the algo becomes O(n).(see readme file)
+        /// </summary>
+        /// <param name="noOfDisk"></param>
+        /// <param name="kSquareTiles"></param>
+        /// <param name="source"></param>
+        /// <param name="auxiliary"></param>
+        /// <param name="destination"></param>
+        /// <returns name="finalStepCount"></returns>
+        static int mathematicallySolve(int noOfDisk, int kSquareTiles, int source, int auxiliary, int destination)
+        {
+            int mod = (int)Math.Pow(10, 9);
+            int finalStepCount = 0;
+            long lastSofN = 0, currentSofN = 1;
+
+            for (int i = 1; i <= noOfDisk; i++)
+            {
+                long bobStepCount = (2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % mod;
+                finalStepCount = (int)(finalStepCount + bobStepCount) % mod;
+                var temp = lastSofN;
+                lastSofN = currentSofN;
+                currentSofN = (currentSofN + 2 * temp + 1) % mod;
+
+                kSquareTiles = (10 * i) % mod;
+                source = (3 * i) % mod;
+                auxiliary = (6 * i) % mod;
+                destination = (9 * i) % mod;
+            }
+            return finalStepCount;
+        }
+
 
         /// <summary>
         /// Not feasible. This problem belongs to set of those problems, which are only feasible with infinite Time & Resource. 
