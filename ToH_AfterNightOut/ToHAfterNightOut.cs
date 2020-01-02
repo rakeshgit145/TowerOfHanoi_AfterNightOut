@@ -3,20 +3,49 @@ using System.Collections.Generic;
 
 namespace ToH_AfterNightOut
 {
-    class ToHAfterNightOut
+    public class ToHAfterNightOut
     {
         static void Main(string[] args)
         {
-            int n = 10000;  //Number of Disks
-            int k = 10, a = 3, b = 6, c = 9; //testing for the best case values, for optimum solution
+            int n, k, a, b, c;
+            if (args.Length > 5)
+            {
+                try
+                {
+                    n = Convert.ToInt32(args[0]);
+                    k = Convert.ToInt32(args[1]);
+                    a = Convert.ToInt32(args[2]);
+                    b = Convert.ToInt32(args[3]);
+                    c = Convert.ToInt32(args[4]);
+                }
+                catch (Exception exe)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The arguments supplied wasn't of proper format.\n" + exe.Message);
+                    Console.WriteLine("Setting default values for n,k,a,b,c");
+                    n = 10000;  //Number of Disks
+                    k = 10; a = 3; b = 6; c = 9; //testing for the required problem statement.
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                n = 10000;  //Number of Disks
+                k = 10; a = 3; b = 6; c = 9; //testing for the required problem statement.
+            }
 
             Console.WriteLine($"\n{"----------------------------"} Tower of Hanoi {"----------------------------"}\n\n");
 
             //-----------Mathematical Approach----------//
             Console.WriteLine($"Number of steps count for ∑1≤n≤10000 E(n,10n,3n,6n,9n):\t{mathematicallySolve(n, k, a, b, c)}");
 
+            Console.WriteLine($"Number of steps count for n=2 E(2,5,1,3,5):\t{StepsCountForFixedDiskCount(2, 5, 1, 3, 5)}");
+
+            Console.WriteLine($"Number of steps count for n=2 E(3,20,4,9,17):\t{StepsCountForFixedDiskCount(3, 20, 4, 9, 17)}");
+
 
             //computationllyExpensiveSolution(n, k*n, a*n, b*n, c*n); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme file)
+            Console.Write("Press any key to exit: ");
             Console.ReadKey();
         }
 
@@ -30,7 +59,7 @@ namespace ToH_AfterNightOut
         /// <param name="auxiliary"></param>
         /// <param name="destination"></param>
         /// <returns name="finalStepCount"></returns>
-        static int mathematicallySolve(int noOfDisk, int kSquareTiles, int source, int auxiliary, int destination)
+        public static int mathematicallySolve(int noOfDisk, int kSquareTiles, int source, int auxiliary, int destination)
         {
             int mod = (int)Math.Pow(10, 9);
             int finalStepCount = 0;
@@ -40,6 +69,7 @@ namespace ToH_AfterNightOut
             {
                 long bobStepCount = (2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % mod;
                 finalStepCount = (int)(finalStepCount + bobStepCount) % mod;
+
                 var temp = lastSofN;
                 lastSofN = currentSofN;
                 currentSofN = (currentSofN + 2 * temp + 1) % mod;
@@ -52,6 +82,25 @@ namespace ToH_AfterNightOut
             return finalStepCount;
         }
 
+        /// <summary>
+        /// Computes StepCount for a specified number of disk count.
+        /// </summary>
+        /// <param name="diskCount"></param>
+        /// <param name="kSquareTiles"></param>
+        /// <param name="source"></param>
+        /// <param name="auxiliary"></param>
+        /// <param name="destination"></param>
+        /// <param name="lastSofN"></param>
+        /// <param name="currentSofN"></param>
+        /// <returns name="bobStepCount"></returns>
+        public static long StepsCountForFixedDiskCount(int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
+        {
+            int mod = (int)Math.Pow(10, 9);
+
+            long currentSofN = (long)(Math.Pow(2, (int)(diskCount + 2)) - 3 - Math.Pow((-1), (int)diskCount)) / 6;  //Math.Pow functions fails to return correct value, for large value of diskCount.
+            int result = (int)(2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % 1000000000;
+            return result;
+        }
 
         /// <summary>
         /// Not feasible. This problem belongs to set of those problems, which are only feasible with infinite Time & Resource. 
@@ -79,6 +128,11 @@ namespace ToH_AfterNightOut
             Console.WriteLine($"Last 9 digits of total Number of steps count for ∑1≤n≤10000 E(n,10n,3n,6n,9n):\t{(totalStepsCount % Math.Pow(10, 9))}");
         }
 
+        /// <summary>
+        /// This Method counts total steps by adding total step count for each unique steps.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <returns></returns>
         private static long countStepsFromStats(Dictionary<Tuple<int, int>, int> stats)
         {
             long stepsCount = 0;
@@ -89,6 +143,11 @@ namespace ToH_AfterNightOut
             return stepsCount;
         }
 
+        /// <summary>
+        /// This Method prints the stats data in readable format
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="StepStats"></param>
         public static void printToHStats(int n, Dictionary<Tuple<int, int>, int> StepStats)
         {
             Console.Write($"{n} => ");
