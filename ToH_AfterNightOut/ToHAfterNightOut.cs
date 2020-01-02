@@ -41,7 +41,7 @@ namespace ToH_AfterNightOut
 
             Console.WriteLine($"Number of steps count for n=2 E(2,5,1,3,5):\t{StepsCountForFixedDiskCount(2, 5, 1, 3, 5)}");
 
-            Console.WriteLine($"Number of steps count for n=2 E(3,20,4,9,17):\t{StepsCountForFixedDiskCount(3, 20, 4, 9, 17)}");
+            Console.WriteLine($"Number of steps count for n=3 E(3,20,4,9,17):\t{StepsCountForFixedDiskCount(3, 20, 4, 9, 17)}");
 
 
             //computationllyExpensiveSolution(n, k*n, a*n, b*n, c*n); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme file)
