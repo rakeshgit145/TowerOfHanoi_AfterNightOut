@@ -90,16 +90,31 @@ namespace ToH_AfterNightOut
         /// <param name="source"></param>
         /// <param name="auxiliary"></param>
         /// <param name="destination"></param>
-        /// <param name="lastSofN"></param>
-        /// <param name="currentSofN"></param>
-        /// <returns name="bobStepCount"></returns>
-        public static long StepsCountForFixedDiskCount(int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
+        /// <returns name="result"></returns>
+        public static int StepsCountForFixedDiskCount(int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
         {
             int mod = (int)Math.Pow(10, 9);
 
-            long currentSofN = (long)(Math.Pow(2, (int)(diskCount + 2)) - 3 - Math.Pow((-1), (int)diskCount)) / 6;  //Math.Pow functions fails to return correct value, for large value of diskCount.
+            int currentSofN = (customPowFun(2, (diskCount + 2)) - 3 - customPowFun((-1), diskCount)) / 6;  //Math.Pow functions fails to return correct value, for large value of diskCount, for diskCount>3024
+
             int result = (int)(2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % 1000000000;
             return result;
+        }
+
+        /// <summary>
+        /// This function is to calculate power related to the our use case.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="toPow"></param>
+        /// <returns></returns>
+        static int customPowFun(int num, int toPow)
+        {
+            int val = num;
+            for (int i = 1; i < toPow; i++)
+            {
+                val = (val * 2) % 1000000000;
+            }
+            return val;
         }
 
         /// <summary>
