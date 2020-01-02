@@ -5,6 +5,7 @@ namespace ToH_AfterNightOut
 {
     public class ToHAfterNightOut
     {
+        static int mod = (int)Math.Pow(10, 9);
         static void Main(string[] args)
         {
             int n, k, a, b, c;
@@ -44,7 +45,8 @@ namespace ToH_AfterNightOut
             Console.WriteLine($"Number of steps count for n=3 E(3,20,4,9,17):\t{StepsCountForFixedDiskCount(3, 20, 4, 9, 17)}");
 
 
-            //computationllyExpensiveSolution(n, k*n, a*n, b*n, c*n); //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme file)
+            //Not Feasible Computationally.[MemoryOutofBoundException] (for more info refer readme file)
+            //computationllyExpensiveSolution(n, k*n, a*n, b*n, c*n);
             Console.Write("Press any key to exit: ");
             Console.ReadKey();
         }
@@ -61,7 +63,6 @@ namespace ToH_AfterNightOut
         /// <returns name="finalStepCount"></returns>
         public static int mathematicallySolve(int noOfDisk, int kSquareTiles, int source, int auxiliary, int destination)
         {
-            int mod = (int)Math.Pow(10, 9);
             int finalStepCount = 0;
             long lastSofN = 0, currentSofN = 1;
 
@@ -93,11 +94,9 @@ namespace ToH_AfterNightOut
         /// <returns name="result"></returns>
         public static int StepsCountForFixedDiskCount(int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
         {
-            int mod = (int)Math.Pow(10, 9);
+            int currentSofN = (customPowFun(2, (diskCount + 2)) - 3 - customPowFun((-1), diskCount)) / 6;  //customPowFun() functions fails to return correct value, for large value of diskCount, for diskCount>3024
 
-            int currentSofN = (customPowFun(2, (diskCount + 2)) - 3 - customPowFun((-1), diskCount)) / 6;  //Math.Pow functions fails to return correct value, for large value of diskCount, for diskCount>3024
-
-            int result = (int)(2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % 1000000000;
+            int result = (int)(2 * currentSofN * (destination - source) * (kSquareTiles - 1) - (2 * kSquareTiles - auxiliary - destination) * (destination - auxiliary)) % mod;
             return result;
         }
 
@@ -106,19 +105,19 @@ namespace ToH_AfterNightOut
         /// </summary>
         /// <param name="num"></param>
         /// <param name="toPow"></param>
-        /// <returns></returns>
+        /// <returns name="val"></returns>
         static int customPowFun(int num, int toPow)
         {
             int val = num;
             for (int i = 1; i < toPow; i++)
             {
-                val = (val * 2) % 1000000000;
+                val = (val * 2) % mod;
             }
             return val;
         }
 
         /// <summary>
-        /// Not feasible. This problem belongs to set of those problems, which are only feasible with infinite Time & Resource. 
+        /// Not feasible for large number of disk. This problem belongs to set of those problems, which are only feasible with infinite Time & Resource. 
         /// </summary>
         /// <param name="n"></param>
         /// <param name="k"></param>
@@ -182,7 +181,7 @@ namespace ToH_AfterNightOut
     /// </summary>
     class TowerOfHanoiAlgo
     {
-        public List<Tuple<int, int>> movement = new List<Tuple<int, int>>();
+        List<Tuple<int, int>> movement = new List<Tuple<int, int>>();
 
         /// <summary>
         /// This function is to play tower of hanoi game with modified rules.
@@ -208,7 +207,7 @@ namespace ToH_AfterNightOut
         /// <param name="fromPeg" type="int"></param>
         /// <param name="toPeg" type="int"></param>
         /// <param name="withPeg" type="int"></param>
-        public void moveTower(int height, int fromPeg, int toPeg, int withPeg)
+        void moveTower(int height, int fromPeg, int toPeg, int withPeg)
         {
             if (height >= 1)
             {
@@ -223,7 +222,7 @@ namespace ToH_AfterNightOut
         /// </summary>
         /// <param name="fromPeg" type="int"></param>
         /// <param name="toPeg" type="int"></param>
-        public void moveDisk(int fromPeg, int toPeg)
+        void moveDisk(int fromPeg, int toPeg)
         {
             movement.Add(new Tuple<int, int>(fromPeg, toPeg));
         }
@@ -236,7 +235,7 @@ namespace ToH_AfterNightOut
         /// <param name="b"></param>
         /// <param name="c"></param>
         /// <returns name="stats"></returns>
-        public Dictionary<Tuple<int, int>, int> gameStats(int a, int b, int c)
+        Dictionary<Tuple<int, int>, int> gameStats(int a, int b, int c)
         {
             Dictionary<Tuple<int, int>, int> stats = new Dictionary<Tuple<int, int>, int>();
             int movement_count = movement.Count;

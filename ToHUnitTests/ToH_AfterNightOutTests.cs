@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ToH_AfterNightOut;
+﻿using ToH_AfterNightOut;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ToHUnitTests
 {
@@ -10,7 +10,7 @@ namespace ToHUnitTests
         /// Tests for ∑1≤n≤10000 E(n,10n,3n,6n,9n)
         /// </summary>
         [TestMethod]
-        public void mathematicallySolve_forGivenIntValues_ReturnsStepCount()
+        public void mathematicallySolve_ForGivenIntValues_ReturnsStepCount()
         {
             var expectedValue = 983975221;
             int n = 10000;  //Number of Disks
