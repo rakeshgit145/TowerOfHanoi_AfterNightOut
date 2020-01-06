@@ -60,6 +60,14 @@ Many people have published algorithms for solving towers of Hanoi game move by m
 - IDE environmnet visual studio.
 - Git for version control.
 
+###UnitTest Project
++ The unit test project uses data driven approach for testing the expected values for each case.
++ The DataSource Attribute's, TestContext.DataRow property isn't available for dotnet Core so we had to use a work around for this using DynamicData Attribute.
++ Reference
+	- [Answer on StackOverflow](https://stackoverflow.com/a/53113431/8010021)
+	- [Issue raised on .net Core Official Github Repo](https://stackoverflow.com/a/53113431/8010021)
++ If the test case project doesn't work then please open TestCasesData folder & then open  **ToHTestCases.json** file properties. There please check "Copy to Output Directory" property is set to "Copy if newer".
+
 ###Reference
 
 [Clifford's Tower of Hanoi Formula](http://www.clifford.at/hanoi/)

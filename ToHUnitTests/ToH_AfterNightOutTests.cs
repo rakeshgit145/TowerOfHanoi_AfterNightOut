@@ -12,10 +12,11 @@ namespace ToHUnitTests
 
         MathematicalSolution mathematicalSoln;
         TestCasesDataReader testCasesDR;
-        static string _testCasesFilePath = @".\TestCasesData\ToHTestCases.json";
+        static string _testCasesFilePath;
 
         public ToH_AfterNightOutTests()
         {
+            _testCasesFilePath = @".\TestCasesData\ToHTestCases.json";
             mathematicalSoln = new MathematicalSolution();
         }
 
@@ -35,7 +36,7 @@ namespace ToHUnitTests
         }
 
         /// <summary>
-        /// For Reading data from JSON file & handling data driven approach
+        /// This Method is for getting data from json file & return parsed data to TestMethod.
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<object[]> GetData()
@@ -61,10 +62,6 @@ namespace ToHUnitTests
         [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
         public void StepsCountForSingleValue_eOfnkabc_ReturnsStepCount(int expectedValue, int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
         {
-            //var dataTest = data;
-            //var expectedValue = 60;
-            //int diskCount = 2, kSquareTiles = 5, source = 1, auxiliary = 3, destination = 5;
-
             var result = mathematicalSoln.StepsCountForFixedDiskCount(diskCount, kSquareTiles, source, auxiliary, destination);
 
             Assert.AreEqual(expectedValue, result, $"Expected value of {expectedValue} is equal to actual value of {result}.");
