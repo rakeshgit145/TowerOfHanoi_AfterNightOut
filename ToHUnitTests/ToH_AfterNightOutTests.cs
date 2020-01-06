@@ -20,6 +20,7 @@ namespace ToHUnitTests
             mathematicalSoln = new MathematicalSolution();
         }
 
+
         /// <summary>
         /// Tests for ∑1≤n≤10000 E(n,10n,3n,6n,9n)
         /// </summary>
@@ -35,6 +36,7 @@ namespace ToHUnitTests
             Assert.AreEqual(expectedValue, result, $"Expected value of {expectedValue} is equal to actual value of {result}.");
         }
 
+
         /// <summary>
         /// This Method is for getting data from json file & return parsed data to TestMethod.
         /// </summary>
@@ -45,15 +47,16 @@ namespace ToHUnitTests
             foreach (var testData in testDataList)
             {
                 yield return new object[] {
-                    Convert.ToInt32(testData.expectedValue),
-                    Convert.ToInt32(testData.diskCount),
-                    Convert.ToInt32(testData.kSquareTiles),
-                    Convert.ToInt32(testData.source),
-                    Convert.ToInt32(testData.auxiliary),
-                    Convert.ToInt32(testData.destination)
+                    Convert.ToInt32(testData.ExpectedValue),
+                    Convert.ToInt32(testData.DiskCount),
+                    Convert.ToInt32(testData.KSquareTiles),
+                    Convert.ToInt32(testData.Source),
+                    Convert.ToInt32(testData.Auxiliary),
+                    Convert.ToInt32(testData.Destination)
                 };
             }
         }
+
 
         /// <summary>
         /// Tests Steps Count for e(n,k,a,b,c)

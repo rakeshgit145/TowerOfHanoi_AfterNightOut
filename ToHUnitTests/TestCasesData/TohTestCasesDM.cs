@@ -14,12 +14,12 @@ namespace ToH_AfterNightOutTests.TestCasesData
 
     public class Data_For_Eofnkabc
     {
-        public string expectedValue { get; set; }
-        public string diskCount { get; set; }
-        public string kSquareTiles { get; set; }
-        public string source { get; set; }
-        public string auxiliary { get; set; }
-        public string destination { get; set; }
+        public string ExpectedValue { get; set; }
+        public string DiskCount { get; set; }
+        public string KSquareTiles { get; set; }
+        public string Source { get; set; }
+        public string Auxiliary { get; set; }
+        public string Destination { get; set; }
     }
 
 }
