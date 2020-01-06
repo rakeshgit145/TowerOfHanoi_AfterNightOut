@@ -9,17 +9,17 @@ Below is the reference for the question.
 
 The Tower of Hanoi (commonly also known as the **Towers of Hanoi(ToH)**), is a puzzle invented by E. Lucas in 1883. It is also known as the Tower of Brahma puzzle and appeared as an intelligence test as per Vedic Indian Culture.
 
-The time to compute number of moves for any "n" number of disk increases exponentially & the worst case time complexity for recursive algorithm for this problem is $$O(2^n)$$.
+The time to compute number of moves for any "n" number of disk increases exponentially & the worst case time complexity for recursive algorithm for this problem is <img src="https://latex.codecogs.com/svg.latex?\large&space;O(2^n)" title="\large O(2^n)" />.
 
 We all know that mathematical formula to take out the number of moves for ToH are:-
 
 Recursive Mathematical formula is:-
 
-$$ T(n) = 2T_{n-1}  +1 $$
+<img src="https://latex.codecogs.com/svg.latex?\large&space;T_n&space;=&space;2T_{n-1}&space;&plus;1" title="\large T_n = 2T_{n-1} +1" />
 
 and the General formula proved by Mathematical Induction is:-
 
-$$ T(n)= 2^n-1 $$
+<img src="https://latex.codecogs.com/svg.latex?\large&space;T_n=&space;2^n-1" title="\large T_n= 2^n-1" />
 
 ### Example to Illustrate Complexity
 
@@ -30,13 +30,13 @@ Let's suppose that, present day computers can perform a single calculation in mi
 
 According to the general formula of ToH, number of moves for n=64 is:
 
-$$Number of Moves = 2^{64} -1= 18446744073709551615$$
+<img src="https://latex.codecogs.com/svg.latex?\large&space;Number&space;of&space;Moves&space;=&space;2^{64}&space;-1=&space;18446744073709551615" title="\large Number of Moves = 2^{64} -1= 18446744073709551615" />
 
 if, the compute time of today's CPU is in microseconds for executing single instruction then also, 
 
-**18446744073709551615 seconds  ~= 584942417355.072 years**
-both divides by $$10^6$$ would give,
-**18446744073709.551615 seconds  ~= 584942.417355072 years**
+**18446744073709551615 seconds ≃ 584942417355.072 years**
+both divides by <img src="https://latex.codecogs.com/svg.latex?\large&space;10^6" title="\large 10^6" /> would give,
+**18446744073709.551615 seconds ≃ 584942.417355072 years**
 
 Even to compute the number of moves for n = 64, this approach is computationally so expensive that computing only a single value of n = 64, it would take nearly 585 thousands of year on any average computer at present.
 
