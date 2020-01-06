@@ -1,5 +1,7 @@
 # Tower of Hanoi - after a night out!
 
+This is a console application & has been created in .Net Core 2.0. It's Unit Test Project is created using MS Test. 
+
 #### Reference for the question:-
 
 Below is the reference for the question.
