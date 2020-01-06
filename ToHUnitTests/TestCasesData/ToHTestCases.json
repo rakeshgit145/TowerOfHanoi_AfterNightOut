@@ -1,0 +1,22 @@
+﻿{
+  "TestData": {
+    "Data_for_eOfnkabc": [
+      {
+        "expectedValue": "60",
+        "diskCount": "2",
+        "kSquareTiles": "5",
+        "source": "1",
+        "auxiliary": "3",
+        "destination": "5"
+      },
+      {
+        "expectedValue": "2358",
+        "diskCount": "3",
+        "kSquareTiles": "20",
+        "source": "4",
+        "auxiliary": "9",
+        "destination": "17"
+      }
+    ]
+  }
+}

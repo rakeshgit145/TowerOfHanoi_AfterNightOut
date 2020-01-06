@@ -1,16 +1,24 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 using ToH_AfterNightOut.Helpers;
+using ToH_AfterNightOutTests.Helpers;
 
 namespace ToHUnitTests
 {
     [TestClass]
     public class ToH_AfterNightOutTests
     {
+
         MathematicalSolution mathematicalSoln;
+        TestCasesDataReader testCasesDR;
+        static string _testCasesFilePath = @".\TestCasesData\ToHTestCases.json";
+
         public ToH_AfterNightOutTests()
         {
             mathematicalSoln = new MathematicalSolution();
         }
+
         /// <summary>
         /// Tests for ∑1≤n≤10000 E(n,10n,3n,6n,9n)
         /// </summary>
@@ -27,27 +35,35 @@ namespace ToHUnitTests
         }
 
         /// <summary>
-        /// Tests Steps Count for e(2,5,1,3,5)
+        /// For Reading data from JSON file & handling data driven approach
         /// </summary>
-        [TestMethod]
-        public void StepsCountForSingleValue_eOf2_5_1_3_5_ReturnsStepCount()
+        /// <returns></returns>
+        public static IEnumerable<object[]> GetData()
         {
-            var expectedValue = 60;
-            int diskCount = 2, kSquareTiles = 5, source = 1, auxiliary = 3, destination = 5;
-
-            var result = mathematicalSoln.StepsCountForFixedDiskCount(diskCount, kSquareTiles, source, auxiliary, destination);
-
-            Assert.AreEqual(expectedValue, result, $"Expected value of {expectedValue} is equal to actual value of {result}.");
+            var testDataList = new TestCasesDataReader(_testCasesFilePath).ParseJson2Model().TestData.Data_for_eOfnkabc;
+            foreach (var testData in testDataList)
+            {
+                yield return new object[] {
+                    Convert.ToInt32(testData.expectedValue),
+                    Convert.ToInt32(testData.diskCount),
+                    Convert.ToInt32(testData.kSquareTiles),
+                    Convert.ToInt32(testData.source),
+                    Convert.ToInt32(testData.auxiliary),
+                    Convert.ToInt32(testData.destination)
+                };
+            }
         }
 
         /// <summary>
-        /// Tests Steps Count for e(3,20,4,9,17)
+        /// Tests Steps Count for e(n,k,a,b,c)
         /// </summary>
         [TestMethod]
-        public void StepsCountForSingleValue_eOf3_20_4_9_17_ReturnsStepCount()
+        [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
+        public void StepsCountForSingleValue_eOfnkabc_ReturnsStepCount(int expectedValue, int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
         {
-            var expectedValue = 2358;
-            int diskCount = 3, kSquareTiles = 20, source = 4, auxiliary = 9, destination = 17;
+            //var dataTest = data;
+            //var expectedValue = 60;
+            //int diskCount = 2, kSquareTiles = 5, source = 1, auxiliary = 3, destination = 5;
 
             var result = mathematicalSoln.StepsCountForFixedDiskCount(diskCount, kSquareTiles, source, auxiliary, destination);
 
