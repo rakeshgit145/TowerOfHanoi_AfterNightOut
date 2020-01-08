@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ToH_AfterNightOut.Helpers;
 using ToH_AfterNightOutTests.Helpers;
+using ToH_AfterNightOutTests.TestCasesData;
 
 namespace ToHUnitTests
 {
@@ -46,13 +47,8 @@ namespace ToHUnitTests
             var testDataList = new TestCasesDataReader(_testCasesFilePath).ParseJson2Model().TestData.Data_for_eOfnkabc;
             foreach (var testData in testDataList)
             {
-                yield return new object[] {
-                    Convert.ToInt32(testData.ExpectedValue),
-                    Convert.ToInt32(testData.DiskCount),
-                    Convert.ToInt32(testData.KSquareTiles),
-                    Convert.ToInt32(testData.Source),
-                    Convert.ToInt32(testData.Auxiliary),
-                    Convert.ToInt32(testData.Destination)
+                yield return new object[] {                    
+                    testData
                 };
             }
         }
@@ -63,10 +59,20 @@ namespace ToHUnitTests
         /// </summary>
         [TestMethod]
         [DynamicData(nameof(GetData), DynamicDataSourceType.Method)]
-        public void StepsCountForSingleValue_eOfnkabc_ReturnsStepCount(int expectedValue, int diskCount, int kSquareTiles, int source, int auxiliary, int destination)
+        public void StepsCountForSingleValue_eOfnkabc_ReturnsStepCount(Data_For_Eofnkabc testData)
         {
+            //Arrange
+            int expectedValue= Convert.ToInt32(testData.ExpectedValue),
+                diskCount = Convert.ToInt32(testData.DiskCount),
+                kSquareTiles= Convert.ToInt32(testData.KSquareTiles),
+                source= Convert.ToInt32(testData.Source),
+                auxiliary= Convert.ToInt32(testData.Auxiliary), 
+                destination= Convert.ToInt32(testData.Destination);
+
+            //Act
             var result = mathematicalSoln.StepsCountForFixedDiskCount(diskCount, kSquareTiles, source, auxiliary, destination);
 
+            //Assert
             Assert.AreEqual(expectedValue, result, $"Expected value of {expectedValue} is equal to actual value of {result}.");
         }
     }
